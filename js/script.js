@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded' , () =>{//load дожидается загрузки всей страницы, DOMContentLoaded дожидает только загрузки DOM дерево
   'use strict';
-//timer
+//Tаймер 
 function countTimer(deadline){
   let timerHours = document.querySelector('#timer-hours'),
       timerMinutes = document.querySelector('#timer-minutes'),
@@ -23,17 +23,14 @@ function countTimer(deadline){
       };
   };
 
-  function updateClock(){
+  function updateClock(){//обновляем время динамически через setInterval
     let timer = getTimeRemaining();
 
+    //выводим на экран
     timerHours.textContent = timer.hours;
     timerMinutes.textContent = timer.minutes;
     timerSeconds.textContent = timer.seconds;
 
-    // if(timer.timeRemaining > 0){
-    //   setTimeout(updateClock, 1000);
-    // }
-    
     if(timer.timeRemaining > 0){
       setInterval(updateClock, 1000);
     }else if(timer.timeRemaining <= 0){
@@ -46,9 +43,31 @@ function countTimer(deadline){
 
   updateClock()
 }
-
 countTimer('4 November 2020');
 
-// setInterval(countTimer , 1000, ('12 November 2020')); //устанавливаем таймер через 1с и передаем аргумент дедлайна
+//Меню
+const toggleMenu = ()=>{
+  const btnMenu = document.querySelector('.menu'),
+        menu = document.querySelector('menu'),
+        closeBtn = document.querySelector('.close-btn'),
+        menuItems = menu.querySelectorAll('ul>li');
+
+  const handlerMenu = () =>{
+    if(!menu.style.transform || menu.style.transform ===  `translate(-100%)`){
+      menu.style.transform = `translate(0)`;
+    }else
+    menu.style.transform = `translate(-100%)`;
+  };
+
+  btnMenu.addEventListener('click', handlerMenu);
+  closeBtn.addEventListener('click', handlerMenu);
+  for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
+    menuItems[i].addEventListener('click', handlerMenu);// перебираем 
+  }; 
+
+  
+};
+toggleMenu();
 
 }); 
+
