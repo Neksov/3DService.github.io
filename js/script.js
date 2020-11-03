@@ -33,6 +33,7 @@ function countTimer(deadline){
     // if(timer.timeRemaining > 0){
     //   setTimeout(updateClock, 1000);
     // }
+    
     if(timer.timeRemaining > 0){
       setInterval(updateClock, 1000);
     }else if(timer.timeRemaining <= 0){
