@@ -40,10 +40,9 @@ function countTimer(deadline){
     }
 
   };
-
-  updateClock()
-}
-countTimer('4 November 2020');
+  updateClock();
+};
+countTimer('29 November 2020');
 
 //Меню
 const toggleMenu = ()=>{
@@ -65,7 +64,7 @@ const toggleMenu = ()=>{
     menuItems[i].addEventListener('click', handlerMenu);// перебираем 
   }; 
 
-  
+
 };
 toggleMenu();
 
