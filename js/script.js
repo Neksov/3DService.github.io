@@ -42,7 +42,7 @@ function countTimer(deadline){
   };
   updateClock();
 };
-countTimer('29 November 2020');
+countTimer('30 November 2020');
 
 //Меню
 const toggleMenu = ()=>{
@@ -52,21 +52,63 @@ const toggleMenu = ()=>{
         menuItems = menu.querySelectorAll('ul>li');
 
   const handlerMenu = () =>{
-    if(!menu.style.transform || menu.style.transform ===  `translate(-100%)`){
-      menu.style.transform = `translate(0)`;
-    }else
-    menu.style.transform = `translate(-100%)`;
+    // if(!menu.style.transform || menu.style.transform ===  `translate(-100%)`){
+    //   menu.style.transform = `translate(0)`;
+    // }else
+    // menu.style.transform = `translate(-100%)`;
+
+    menu.classList.toggle('active-menu');
   };
 
   btnMenu.addEventListener('click', handlerMenu);
   closeBtn.addEventListener('click', handlerMenu);
-  for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
-    menuItems[i].addEventListener('click', handlerMenu);// перебираем 
-  }; 
-
+  
+  // for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
+  //   menuItems[i].addEventListener('click', handlerMenu);// перебираем 
+  // }; 
+  menuItems.forEach((element) => element.addEventListener('click', handlerMenu)); // перебираем 
 
 };
 toggleMenu();
+
+//popup 
+const togglePopUp = () =>{
+  const popup = document.querySelector('.popup'),
+        popupBtn = document.querySelectorAll('.popup-btn'),
+        popUpClose = document.querySelector('.popup-close');
+
+        popupBtn.forEach((elem) =>{
+          elem.addEventListener('click', () =>{
+            popup.style.display = 'block';
+          });
+        });
+
+        popUpClose.addEventListener('click', () =>{
+          popup.style.display = 'none';
+        });
+
+};
+togglePopUp();
+
+//Скролл
+const scroll = () =>{
+  const anchors = document.querySelectorAll('a[href*="#"]')//собираем все ссылки
+
+  anchors.forEach((elem) =>{
+    elem.addEventListener('click', function (e) {//вешаем события на все наши ссылки
+      e.preventDefault();// убираем стандартное поведение
+      
+      const block = elem.getAttribute('href').substr(1);
+      
+      document.getElementById(block).scrollIntoView({//scrollIntoView метод для прокрутки 
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start'
+      });
+    });
+  });
+};
+scroll();
 
 }); 
 
