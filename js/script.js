@@ -102,7 +102,7 @@ const animatePopup = () =>{
             if (timePassed > duration || screen.width < 768) timePassed = duration;//время больше чем длительность анимации, то анимация прекращается 
             draw(timePassed); // отрисовать её
             if (timePassed < duration) {
-              requestAnimationFrame(animate);//если меньше то рисуется анимация
+              requestAnimationFrame(animate);//если меньше то рисуется анимация дальше
             }
           });
         };
