@@ -44,44 +44,20 @@ function countTimer(deadline){
 };
 countTimer('30 November 2020');
 
+//меню, откртие/закрытие 
 const toggleMenu = ()=>{
   const btnMenu = document.querySelector('.menu'),
-        menu = document.querySelector('menu'),
-        closeBtn = document.querySelector('.close-btn'),
-        menuItems = menu.querySelectorAll('ul>li');
+        menu = document.querySelector('menu');
 
-  const handlerMenu = () =>{
-    menu.classList.toggle('active-menu');
-  };
-
-  
-//кнопка меню
-  btnMenu.addEventListener('click', (event) =>{
-    let target = event.target;
-    target = target.closest('.menu');
-    if(target){
-      handlerMenu();
+  document.addEventListener('click', (elem) =>{
+    if(elem.target.closest('.menu')){
+      menu.classList.add('active-menu');
+    }else if(elem.target.matches('.close-btn') || elem.target.closest('li>a') || !elem.target.closest('menu')){
+      menu.classList.remove('active-menu');
     }
   });
-//крестик 
-  menu.addEventListener('click', (event) =>{
-    let target = event.target;
-    target = target.closest('ul>li');
-    if(target){
-      for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
-        handlerMenu();
-      }; 
-    }else{
-      let target = event.target;
-      target = target.classList.contains('close-btn');
-      if(target){
-      handlerMenu();}
-    }
-  });
-
 };
 toggleMenu();
-
 
 //popup 
 const togglePopUp = () =>{
@@ -146,13 +122,14 @@ const scroll = () =>{
     elem.addEventListener('click', function (e) {//вешаем события на все наши ссылки
       e.preventDefault();// убираем стандартное поведение
       
-      const block = elem.getAttribute('href').substr(1);
-      
-      document.getElementById(block).scrollIntoView({//scrollIntoView метод для прокрутки 
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start'
-      });
+  if(elem !== 'a[href="#close"]'){
+    const block = elem.getAttribute('href').substr(1);
+    document.getElementById(block).scrollIntoView({//scrollIntoView метод для прокрутки 
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'start'
+    });
+}
     });
   });
 };
