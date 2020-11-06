@@ -44,7 +44,6 @@ function countTimer(deadline){
 };
 countTimer('30 November 2020');
 
-//Меню
 const toggleMenu = ()=>{
   const btnMenu = document.querySelector('.menu'),
         menu = document.querySelector('menu'),
@@ -52,30 +51,42 @@ const toggleMenu = ()=>{
         menuItems = menu.querySelectorAll('ul>li');
 
   const handlerMenu = () =>{
-    // if(!menu.style.transform || menu.style.transform ===  `translate(-100%)`){
-    //   menu.style.transform = `translate(0)`;
-    // }else
-    // menu.style.transform = `translate(-100%)`;
-
     menu.classList.toggle('active-menu');
   };
 
-  btnMenu.addEventListener('click', handlerMenu);
-  closeBtn.addEventListener('click', handlerMenu);
   
-  // for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
-  //   menuItems[i].addEventListener('click', handlerMenu);// перебираем 
-  // }; 
-  menuItems.forEach((element) => element.addEventListener('click', handlerMenu)); // перебираем 
+//кнопка меню
+  btnMenu.addEventListener('click', (event) =>{
+    let target = event.target;
+    target = target.closest('.menu');
+    if(target){
+      handlerMenu();
+    }
+  });
+//крестик 
+  menu.addEventListener('click', (event) =>{
+    let target = event.target;
+    target = target.closest('ul>li');
+    if(target){
+      for (let i = 0; i < menuItems.length; i++) { //перебираем все пункты в меню
+        handlerMenu();
+      }; 
+    }else{
+      let target = event.target;
+      target = target.classList.contains('close-btn');
+      if(target){
+      handlerMenu();}
+    }
+  });
 
 };
 toggleMenu();
 
+
 //popup 
 const togglePopUp = () =>{
   const popup = document.querySelector('.popup'),
-        popupBtn = document.querySelectorAll('.popup-btn'),
-        popUpClose = document.querySelector('.popup-close');
+        popupBtn = document.querySelectorAll('.popup-btn');
 
         popupBtn.forEach((elem) =>{
           elem.addEventListener('click', () =>{
@@ -83,8 +94,16 @@ const togglePopUp = () =>{
           });
         });
 
-        popUpClose.addEventListener('click', () =>{
-          popup.style.display = 'none';
+        popup.addEventListener('click', (event) =>{
+          let target = event.target;
+          if(target.classList.contains('popup-close')){//закрытие онка по крестику 
+            popup.style.display = 'none';
+          }else{
+            target = target.closest('.popup-content');
+              if(!target){
+                popup.style.display = 'none';
+              }
+          }
         });
 
 };
@@ -94,7 +113,8 @@ togglePopUp();
 const animatePopup = () =>{
   const popupContent = document.querySelector('.popup-content'),
         popupBtn = document.querySelectorAll('.popup-btn');
-        
+        // popUpClose = document.querySelector('.popup-close');
+
         function animate( draw, duration) { // передает в функцую 2 параметра
           let start = performance.now(); //начало загрузки страницы
           requestAnimationFrame(function animate(time) {//time с начало вызова функции 
@@ -102,7 +122,7 @@ const animatePopup = () =>{
             if (timePassed > duration || screen.width < 768) timePassed = duration;//время больше чем длительность анимации, то анимация прекращается 
             draw(timePassed); // отрисовать её
             if (timePassed < duration) {
-              requestAnimationFrame(animate);//если меньше то рисуется анимация дальше
+              requestAnimationFrame(animate);//если меньше то рисуется анимация дальше 
             }
           });
         };
@@ -110,15 +130,15 @@ const animatePopup = () =>{
         popupBtn.forEach((elem) =>{
           elem.addEventListener('click', () =>{
             animate(function(timePassed){
-              popupContent.style.left = timePassed / 50 + '%';
+              popupContent.style.top = timePassed / 70 + '%';
             },2000);
           });
         });
+
 };
 animatePopup();
 
-
-//Скролл
+// Скролл
 const scroll = () =>{
   const anchors = document.querySelectorAll('a[href*="#"]')//собираем все ссылки
 
@@ -138,7 +158,58 @@ const scroll = () =>{
 };
 scroll();
 
+//Табы 
+const tabs = () =>{
+  const tabHeader = document.querySelector('.service-header'),
+        tabContent = document.querySelectorAll('.service-tab'),
+        tab = document.querySelectorAll('.service-header-tab');
 
+  const toggleTabContent = (index) =>{
+    for(let i=0; i < tabContent.length; i++){
+      if(index === i){
+        tab[i].classList.add('active');//добавляем класс active
+        tabContent[i].classList.remove('d-none'); 
+      }else{
+        tab[i].classList.remove('active');
+        tabContent[i].classList.add('d-none'); 
+      }
+    }
+  };
+
+  tabHeader.addEventListener('click', (event) =>{
+
+          //1-ый вариант
+
+          // let target = event.target; //записываем в таргет элемент на котором произошло событие.
+
+          // while(target !== tabHeader){//провермяем евляется ли наш target tabHeaderом
+
+          //   if (target.classList.contains('service-header-tab')){
+
+          //     tab.forEach((item, i ) =>{ // колбэк функция принимает 2 аргумента
+          //       if (item === target){
+          //         toggleTabContent(i);//вывзов функции сраниваем индекс который получили с индексем tabContent
+          //       }
+          //     });
+          //   return;//если выполнилось завершили
+          //   }
+
+          //   target = target.parentNode; //присваиваем родителя если не выполняется условие if(target.classList.contains('service-header-tab')
+          
+    let target = event.target; //записываем в таргет элемент на котором произошло событие.
+      target = target.closest('.service-header-tab');// проверяем есть ли утаргета селектор .service-header-tab, если нет то подымается вверх пока не найдет, либо null 
+        if (target){
+          tab.forEach((item, i ) =>{ // колбэк функция принимает 2 аргумента
+            if (item === target){
+              toggleTabContent(i);//вывзов функции сраниваем индекс который получили с индексем tabContent
+            }
+          });
+        }
+
+  target = target.parentNode; //присваиваем родителя если не выполняется условие if(target.classList.contains('service-header-tab')
+  });
+};  
+tabs();
 
 }); 
 
