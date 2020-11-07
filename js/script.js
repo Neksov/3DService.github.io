@@ -115,25 +115,25 @@ const animatePopup = () =>{
 animatePopup();
 
 // Скролл
-const scroll = () =>{
-  const anchors = document.querySelectorAll('a[href*="#"]')//собираем все ссылки
+// const scroll = () =>{
+//   const anchors = document.querySelectorAll('a[href*="#"]')//собираем все ссылки
 
-  anchors.forEach((elem) =>{
-    elem.addEventListener('click', function (e) {//вешаем события на все наши ссылки
-      e.preventDefault();// убираем стандартное поведение
+//   anchors.forEach((elem) =>{
+//     elem.addEventListener('click', function (e) {//вешаем события на все наши ссылки
+//       e.preventDefault();// убираем стандартное поведение
       
-  if(elem !== 'a[href="#close"]'){
-    const block = elem.getAttribute('href').substr(1);
-    document.getElementById(block).scrollIntoView({//scrollIntoView метод для прокрутки 
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'start'
-    });
-}
-    });
-  });
-};
-scroll();
+//   if(elem !== 'a[href="#close"]'){
+//     const block = elem.getAttribute('href').substr(1);
+//     document.getElementById(block).scrollIntoView({//scrollIntoView метод для прокрутки 
+//       behavior: 'smooth',
+//       block: 'start',
+//       inline: 'start'
+//     });
+// }
+//     });
+//   });
+// };
+// scroll();
 
 //Табы 
 const tabs = () =>{
@@ -194,9 +194,33 @@ const slider = () =>{
         slide = document.querySelectorAll('.portfolio-item'),
         dot = document.querySelectorAll('.dot'),
         btn = document.querySelectorAll('.portfolio-btn');
+        
 
   let currentSlide = 0,
       interval;
+      // countslide;
+
+//подсчет моих слайдов 
+const count = () =>{
+    slide.forEach((elem) =>{
+      let parent = document.querySelector(".portfolio-dots"),
+      // let parent = document.getElementsByTagName("ul")[0],
+        li = document.createElement("li");
+        elem = parent.appendChild(li);
+
+        for(let i = 0; i < elem.length; i++){
+          let countSlide;
+          if(elem[i]===0){
+            elem.classList.add('dot dot-active');
+          } else{
+            elem.classList.add('dot');
+          }
+          countSlide = elem;
+        console.log(countSlide);
+        }
+    });
+  };
+  count();
 
   const prevSlide = (elem, index, strClass) =>{//elem - принимаем элемент у которого необ уд класс, index - индекс наш currentSlide, strClass - и класс который хоти удалить
     elem[index].classList.remove(strClass);
