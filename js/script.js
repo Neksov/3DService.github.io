@@ -187,7 +187,7 @@ const tabs = () =>{
 };  
 tabs();
 
-//подсчет моих слайдов 
+//подсчет моих слайдов и добавление точек 
 const count = () =>{
   const slide = document.querySelectorAll('.portfolio-item');
 
@@ -357,7 +357,6 @@ const сalc = (price = 100) =>{
     let target = e.target;
     if(target === calcType || target === calcSquare || target === calcCount || target === calcDay ){
       countSum();
-
     }
   });
 
