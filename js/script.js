@@ -297,28 +297,16 @@ slider();
 //Смена картинки при наведение
 const imgChange = () =>{
 
-  // const command = document.querySelectorAll('.command');
-  // command.forEach((elem) =>{
-  //   elem.addEventListener('mousemove', (event) =>{
-  //     let target = event.target;
-  //     if(target.matches('.command__photo')){
-  //       event.target.src = event.target.dataset.img;
-  //     }else if(!target){
-  //       event.target.dataset.img = event.target.src;
-  //     }
-  //   });
-  // });
-
-  const command = document.querySelector('.command');
-    command.addEventListener('mousemove', (event) =>{
-      let target = event.target;
-      if(target.matches('.command__photo')){
+  const command = document.querySelectorAll('.command__photo');
+  command.forEach((elem) =>{
+    let img = elem.src;//начальное изображение 
+    elem.addEventListener('mouseover', (event) =>{//меняем при наведении
         event.target.src = event.target.dataset.img;
-      }else if(!target.matches('.command__photo')){
-        return target;
-      }
     });
-
+    elem.addEventListener('mouseout', (event) =>{//меняем когда убираем мышь
+      event.target.src = img;
+    });
+  });
 };
 imgChange();
 
