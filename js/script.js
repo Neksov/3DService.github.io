@@ -81,7 +81,6 @@ const togglePopUp = () =>{
               }
           }
         });
-
 };
 togglePopUp();
 
@@ -294,5 +293,45 @@ const slider = () =>{
   startSlide();
 };
 slider();
+
+//Смена картинки при наведение
+const imgChange = () =>{
+
+  // const command = document.querySelectorAll('.command');
+  // command.forEach((elem) =>{
+  //   elem.addEventListener('mousemove', (event) =>{
+  //     let target = event.target;
+  //     if(target.matches('.command__photo')){
+  //       event.target.src = event.target.dataset.img;
+  //     }else if(!target){
+  //       event.target.dataset.img = event.target.src;
+  //     }
+  //   });
+  // });
+
+  const command = document.querySelector('.command');
+    command.addEventListener('mousemove', (event) =>{
+      let target = event.target;
+      if(target.matches('.command__photo')){
+        event.target.src = event.target.dataset.img;
+      }else if(!target.matches('.command__photo')){
+        return target;
+      }
+    });
+
+};
+imgChange();
+
+//калькулятор
+const сalc = () =>{
+  const itemCalc = document.querySelector('.calc-block');
+  itemCalc.addEventListener('input', (e) =>{
+    let target = e.target;
+    if(target.matches('.calc-square') || target.matches('.calc-count') || target.matches('.calc-day')){
+      target.value = target.value.replace(/\D/g, ''); // ограничиваем ввод всего кроме цифр
+    }
+  });
+};
+сalc();
 }); 
 
