@@ -616,7 +616,7 @@ main a {
   border: 1px solid #19b5fe;
   margin: 15px 0;
   color: #464646;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   padding-left: 18px;
   outline: transparent
@@ -626,7 +626,6 @@ main a {
   border-bottom: 1px solid #000;
   -ms-flex-preferred-size: 48%;
   flex-basis: 48%;
-  color: #d7d8d8;
   font-size: 18px;
   text-align: left;
   padding: 0 15px;

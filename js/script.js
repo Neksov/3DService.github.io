@@ -347,7 +347,7 @@ const сalc = (price = 100) =>{
     }
 
     if(typeValue && squareValue){// проверка и умножение введеных данных площадь и обьект
-      total = price * typeValue * squareValue * countValue * dayValue;
+      total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
     }
 
     totalValue.textContent = total; //вывод итоговая цена
@@ -364,4 +364,140 @@ const сalc = (price = 100) =>{
 };
 сalc(100);//при вызове калькулятора передаем сразу цену
 
+//send-Ajax-form
+const sendForm = () =>{
+
+  const errorMessage = 'Что-то пошло не так...',
+        loadMessage = 'Загрузка...',
+        successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+  
+  const form1 = document.getElementById('form1'),// форм главная
+        form2 = document.getElementById('form2'),// форма вопросы 
+        form3 = document.getElementById('form3'),// форма модалка 
+        formPhone = document.querySelectorAll('input[type=tel]'),
+        formText = document.querySelectorAll('input[type=text]'),
+        topForm = document.querySelector('.top-form');
+       
+
+  const statusMessage = document.createElement('div');//добавялем элемент на страницу
+  statusMessage.style.cssText = 'font-size: 2rem;';
+  statusMessage.style.cssText = 'color: white;';
+
+  //проверка вводимых дынных-ТОЛЬКО ЦИФРЫ
+  formPhone.forEach((elem) =>{
+    elem.addEventListener('input', (e) =>{
+      let target = e.target;
+      if(target.matches('.form-phone')){
+        target.value = target.value.replace(/[^\+\d]/g, ''); // ограничиваем ввод всего кроме цифр
+      }
+    });
+  });
+
+
+  //проверка вводимых дынных-ТОЛЬКО кир и пробелы
+  formText.forEach((elem) =>{
+    topForm.classList.add('form-name');//добавили класс к input с классом top-form
+    elem.addEventListener('input', (e) =>{
+      let target = e.target;
+      if(target.matches('.form-name')){
+        target.value = target.value.replace(/[^\+\d]/g, ''); // ограничиваем ввод всего кроме цифр
+      }
+    });
+  });
+
+  form1.addEventListener('submit', (event) =>{
+    event.preventDefault();//отменяем стандарное поведение браузера
+    form1.appendChild(statusMessage);// добавляем элемент на страницу
+
+    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+
+    const formData = new FormData(form1);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
+    let body = {}; //обект в который помещаем наши данные
+
+    //для отправки JSON перебираем и записываем каждый цикл
+    formData.forEach((val, key) =>{
+      body[key] = val;
+    });
+    //две колбек функции
+    postData(body, 
+      () =>{
+          statusMessage.textContent = successMessage;
+      }, 
+      (error) =>{
+          statusMessage.textContent = errorMessage;
+          console.error(error); 
+    });
+  });
+
+  form2.addEventListener('submit', (event) =>{
+    event.preventDefault();//отменяем стандарное поведение браузера
+    form2.appendChild(statusMessage);// добавляем элемент на страницу
+
+    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+
+    const formData = new FormData(form2);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
+    let body = {}; //обект в который помещаем наши данные
+
+    //для отправки JSON перебираем и записываем каждый цикл
+    formData.forEach((val, key) =>{
+      body[key] = val;
+    });
+    //две колбек функции
+    postData(body, 
+      () =>{
+          statusMessage.textContent = successMessage;
+      }, 
+      (error) =>{
+          statusMessage.textContent = errorMessage;
+          console.error(error); 
+    });
+  });
+
+  form3.addEventListener('submit', (event) =>{
+    event.preventDefault();//отменяем стандарное поведение браузера
+    form3.appendChild(statusMessage);// добавляем элемент на страницу
+
+    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+
+    const formData = new FormData(form3);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
+    let body = {}; //обект в который помещаем наши данные
+
+    //для отправки JSON перебираем и записываем каждый цикл
+    formData.forEach((val, key) =>{
+      body[key] = val;
+    });
+    //две колбек функции
+    postData(body, 
+      () =>{
+          statusMessage.textContent = successMessage;
+      }, 
+      (error) =>{
+          statusMessage.textContent = errorMessage;
+          console.error(error); 
+    });
+  });
+  
+  const postData = (body, outputData, errorData) =>{
+    //запрос к серверу
+    const request = new XMLHttpRequest();// обьект, вызов функции конструктора
+
+    request.addEventListener('readystatechange', ()=>{//прослушка события, срабатывает когда меняется статус readyState
+
+      if(request.readyState !== 4){
+        return;
+      }
+      if(request.status === 200){//если 200 то ок
+        outputData();
+      }else{
+        errorData(request.status)
+      }
+    });
+
+    request.open('POST', './server.php');// отправляем данные на сервер 
+    request.setRequestHeader('Content-Type', 'application/json');//настройка зоголовков (имя зоголовка, значние)
+    request.send(JSON.stringify(body));//отправляем данные на сервер 
+  };
+
+};
+sendForm();
 }); 
