@@ -367,9 +367,8 @@ const сalc = (price = 100) =>{
 //send-Ajax-form
 const sendForm = () =>{
 
-  const errorMessage = 'Что-то пошло не так...',
-        loadMessage = 'Загрузка...',
-        successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+  let errorMessage = 'Что-то пошло не так...',
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
   
   const form1 = document.getElementById('form1'),// форм главная
         form2 = document.getElementById('form2'),// форма вопросы 
@@ -389,7 +388,9 @@ const sendForm = () =>{
         formEmail3 = document.getElementById('form3-email'),
         formTel3 = document.getElementById('form3-phone');
 
-  const statusMessage = document.createElement('div');//добавялем элемент на страницу
+  let statusMessage = document.createElement('div'),//добавялем элемент на страницу
+      load = document.createElement('div');//добавялем элемент на страницу
+
   statusMessage.style.cssText = 'font-size: 2rem;';
   statusMessage.style.cssText = 'color: white;';
 
@@ -414,9 +415,10 @@ const sendForm = () =>{
 
   form1.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
-    form1.appendChild(statusMessage);// добавляем элемент на страницу
+    form1.appendChild(statusMessage);// добавляем элемент на страницу    
+    form1.appendChild(load);// добавляем элемент на страницу    
 
-    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+    load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form1);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
     let body = {}; //обект в который помещаем наши данные
@@ -429,10 +431,12 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
+          load.remove(load);      
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
+          load.remove(load);
     });
 
     formName.value = '';
@@ -444,8 +448,9 @@ const sendForm = () =>{
   form2.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form2.appendChild(statusMessage);// добавляем элемент на страницу
+    form2.appendChild(load);// добавляем элемент на страницу    
 
-    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+    load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form2);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
     let body = {}; //обект в который помещаем наши данные
@@ -458,10 +463,12 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
+          load.remove(load);
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
+          load.remove(load);
     });
 
     formName2.value = '';
@@ -473,8 +480,9 @@ const sendForm = () =>{
   form3.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form3.appendChild(statusMessage);// добавляем элемент на страницу
+    form3.appendChild(load);// добавляем элемент на страницу    
 
-    statusMessage.textContent = loadMessage;//вывод сообщения загрузка
+    load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form3);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
     let body = {}; //обект в который помещаем наши данные
@@ -487,10 +495,12 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
+          load.remove(load);
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
-          console.error(error); 
+          console.error(error);
+          load.remove(load);
     });
 
     formName3.value = '';

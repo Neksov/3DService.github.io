@@ -1179,3 +1179,22 @@ footer .web {
     left: 5px
   }
 }
+
+.sk-spinner-pulse {
+  width: 3em;
+  height: 3em;
+  margin: auto;
+  background-color: #19b5fe;
+  border-radius: 100%;
+  animation: sk-spinner-pulse 1.0s infinite ease-in-out;
+}
+
+@keyframes sk-spinner-pulse {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
