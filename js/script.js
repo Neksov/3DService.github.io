@@ -88,7 +88,6 @@ togglePopUp();
 const animatePopup = () =>{
   const popupContent = document.querySelector('.popup-content'),
         popupBtn = document.querySelectorAll('.popup-btn');
-        // popUpClose = document.querySelector('.popup-close');
 
         function animate( draw, duration) { // передает в функцую 2 параметра
           let start = performance.now(); //начало загрузки страницы
@@ -431,18 +430,24 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
-          load.remove(load);      
+          load.remove(load);   //удаляем прилоадер 
+          setTimeout(() => {//удаляем строку после выводыа сообщения
+            statusMessage.remove();
+          }, 5000);
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
           load.remove(load);
+          setTimeout(() => {
+            statusMessage.remove();
+        }, 5000)
     });
 
     formName.value = '';
     formEmail.value = '';
     formTel.value = '';
-
+    statusMessage.textContent ='';
   });
 
   form2.addEventListener('submit', (event) =>{
@@ -464,17 +469,24 @@ const sendForm = () =>{
       () =>{
           statusMessage.textContent = successMessage;
           load.remove(load);
+          setTimeout(() => {
+            statusMessage.remove();
+         }, 5000)
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
           load.remove(load);
+          setTimeout(() => {
+            statusMessage.remove();
+         }, 5000)
     });
 
     formName2.value = '';
     formEmail2.value = '';
     formTel2.value = '';
     mess.value = '';
+    statusMessage.textContent ='';
   });
 
   form3.addEventListener('submit', (event) =>{
@@ -496,16 +508,23 @@ const sendForm = () =>{
       () =>{
           statusMessage.textContent = successMessage;
           load.remove(load);
+          setTimeout(() => {
+            statusMessage.remove();
+        }, 5000)
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error);
           load.remove(load);
+          setTimeout(() => {
+            statusMessage.remove();
+        }, 5000)
     });
 
     formName3.value = '';
     formEmail3.value = '';
     formTel3.value = '';
+    statusMessage.textContent ='';
   });
   
   const postData = (body, outputData, errorData) =>{
