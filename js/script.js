@@ -530,7 +530,7 @@ const sendForm = () =>{
           popup.style.display = 'none';
           statusMessage.remove();
       }, 3000);
-      while (timerId--) {
+      while (timerId--) {//удаляем таймер
         clearTimeout(timerId);
       }
       }
