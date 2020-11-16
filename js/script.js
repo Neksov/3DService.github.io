@@ -510,7 +510,6 @@ const sendForm = () =>{
     const request = new XMLHttpRequest();// обьект, вызов функции конструктора
 
     request.addEventListener('readystatechange', ()=>{//прослушка события, срабатывает когда меняется статус readyState
-
       if(request.readyState !== 4){
         return;
       }
@@ -520,14 +519,20 @@ const sendForm = () =>{
         let timerId  = setTimeout(() => {
           popup.style.display = 'none';
           statusMessage.remove();
-      }, 2000);
+      }, 3000);
+      while (timerId--) {
+        clearTimeout(timerId);
+      }
       }else{
         errorData(request.status)
         load.remove(load);
         let timerId  = setTimeout(() => {
           popup.style.display = 'none';
           statusMessage.remove();
-      }, 2000);
+      }, 3000);
+      while (timerId--) {
+        clearTimeout(timerId);
+      }
       }
     });
 
