@@ -431,19 +431,10 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
-          load.remove(load);   //удаляем прилоадер
-           
-          setTimeout(() => {//удаляем строку после выводыа сообщения
-            statusMessage.remove();
-          }, 3000);
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
-          load.remove(load);
-          setTimeout(() => {
-            statusMessage.remove();
-        }, 3000)
     });
 
     formName.value = '';
@@ -470,18 +461,10 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
-          load.remove(load);
-          setTimeout(() => {
-            statusMessage.remove();
-         }, 3000)
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error); 
-          load.remove(load);
-          setTimeout(() => {
-            statusMessage.remove();
-         }, 3000)
     });
 
     formName2.value = '';
@@ -509,30 +492,16 @@ const sendForm = () =>{
     postData(body, 
       () =>{
           statusMessage.textContent = successMessage;
-          load.remove(load);
-          const timer = setTimeout(() => {
-            popup.style.display = 'none';
-            statusMessage.remove();
-        }, 2000);
-        clearTimeout(timer);
-
       }, 
       (error) =>{
           statusMessage.textContent = errorMessage;
           console.error(error);
-          load.remove(load);
-          let timer = setTimeout(() => {
-            popup.style.display = 'none';
-            statusMessage.remove();
-        }, 2000);
     });
 
     formName3.value = '';
     formEmail3.value = '';
     formTel3.value = '';
     statusMessage.textContent ='';
-
-
   });
   
   const postData = (body, outputData, errorData) =>{
@@ -547,8 +516,18 @@ const sendForm = () =>{
       }
       if(request.status === 200){//если 200 то ок
         outputData();
+        load.remove(load);
+        let timerId  = setTimeout(() => {
+          popup.style.display = 'none';
+          statusMessage.remove();
+      }, 2000);
       }else{
         errorData(request.status)
+        load.remove(load);
+        let timerId  = setTimeout(() => {
+          popup.style.display = 'none';
+          statusMessage.remove();
+      }, 2000);
       }
     });
 
