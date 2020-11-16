@@ -387,6 +387,7 @@ const sendForm = () =>{
         formEmail3 = document.getElementById('form3-email'),
         formTel3 = document.getElementById('form3-phone'),
         popup = document.querySelector('.popup');
+        // formEmail = document.querySelectorAll('.form-email');
 
   let statusMessage = document.createElement('div'),//добавялем элемент на страницу
       load = document.createElement('div');//добавялем элемент на страницу
@@ -402,13 +403,10 @@ const sendForm = () =>{
       let target = e.target;
       if(target.matches('.form-name')){
         target.value = target.value.replace(/[^а-яё\s]/ig, ''); // ограничиваем ввод всего кроме цифр
-      }
-    });
-
-    elem.addEventListener('input', (e) =>{  //проверка вводимых дынных-ТОЛЬКО ЦИФРЫ в инпут телефон
-      let target = e.target;
-      if(target.matches('.form-phone')){
-        target.value = target.value.replace(/[^\+\d]/g, ''); // ограничиваем ввод всего кроме цифр
+      }else if(target.matches('.form-phone')){
+        target.value = target.value.replace(/[^\+\d]/g, '').substring(0,12); // ограничиваем ввод всего кроме цифр 
+      }else if(target.matches('.form-email')){
+        target.value = target.value.replace(/\s/g, ''); // ограничиваем ввод всего кроме пробелы
       }
     });
   });
