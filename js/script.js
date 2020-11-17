@@ -425,19 +425,36 @@ const sendForm = () =>{
     formData.forEach((val, key) =>{
       body[key] = val;
     });
-    //две колбек функции
-
-    const outputData = () =>{
-      statusMessage.textContent = successMessage;
-    };
-    const error = () =>{
-      statusMessage.textContent = errorMessage;
-      console.error(error); 
-    };
 
     postData(body) 
-      .then(outputData)
-      .catch(error);
+    .then((response) =>{
+      if(response.status !==200){
+        throw new Error('status network not 200');
+      }
+      statusMessage.textContent = successMessage;
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }
+    })
+    .catch((error) =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error); 
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }  
+    });
 
     formName.value = '';
     formEmail.value = '';
@@ -459,18 +476,37 @@ const sendForm = () =>{
     formData.forEach((val, key) =>{
       body[key] = val;
     });
-    //две колбек функции
-    const outputData = () =>{
-      statusMessage.textContent = successMessage;
-    };
-    const error = () =>{
-      statusMessage.textContent = errorMessage;
-      console.error(error); 
-    };
+
 
     postData(body) 
-      .then(outputData)
-      .catch(error);
+    .then((response) =>{
+      if(response.status !==200){
+        throw new Error('status network not 200');
+      }
+      statusMessage.textContent = successMessage;
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }
+    })
+    .catch((error) =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error);
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }   
+    });
 
     formName2.value = '';
     formEmail2.value = '';
@@ -493,18 +529,36 @@ const sendForm = () =>{
     formData.forEach((val, key) =>{
       body[key] = val;
     });
-    //две колбек функции
-    const outputData = () =>{
-      statusMessage.textContent = successMessage;
-    };
-    const error = () =>{
-      statusMessage.textContent = errorMessage;
-      console.error(error); 
-    };
 
-    postData(body) 
-      .then(outputData)
-      .catch(error);
+     postData(body) //обработка сообщения 
+    .then((response) =>{
+      if(response.status !==200){
+        throw new Error('status network not 200');
+      }
+      statusMessage.textContent = successMessage;
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }
+    })
+    .catch((error) =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error);   
+
+      load.remove(load);//удаляем прилоадер
+      let timerId  = setTimeout(() => {//таймер
+        popup.style.display = 'none';//закрываем модалку
+        statusMessage.remove();//удаляем сообщение под формой
+      }, 3000);
+      while (timerId--) {//удаляем таймер
+        clearTimeout(timerId);
+      }
+    });
 
     formName3.value = '';
     formEmail3.value = '';
@@ -513,42 +567,14 @@ const sendForm = () =>{
   });
   
   const postData = (body) =>{
-
-    //запрос к серверу
-    return new Promise((resolve, reject) =>{
-      const request = new XMLHttpRequest();// обьект, вызов функции конструктора
-
-      request.addEventListener('readystatechange', ()=>{//отлавливаем события, срабатывает когда меняется статус readyState
-        if(request.readyState !== 4){
-          return;
-        }
-        if(request.status === 200){//если 200 то ок
-          resolve(request);
-
-          load.remove(load);//удаляем прилоадер
-          let timerId  = setTimeout(() => {//таймер
-            popup.style.display = 'none';//закрываем модалку
-            statusMessage.remove();//удаляем сообщение под формой
-          }, 3000);
-          while (timerId--) {//удаляем таймер
-            clearTimeout(timerId);
-          }
-        }else{
-          reject(request.status)
-
-          load.remove(load);//удаляем прилоадер
-          let timerId  = setTimeout(() => {//таймер
-            popup.style.display = 'none';//закрываем модалку
-            statusMessage.remove();//удаляем сообщение под формой
-        }, 3000);
-        while (timerId--) {//удаляем таймер
-          clearTimeout(timerId);
-        }
-        }
-      });
-      request.open('POST', './server.php');// отправляем данные на сервер 
-      request.setRequestHeader('Content-Type', 'application/json');//настройка зоголовков (имя зоголовка, значние)
-      request.send(JSON.stringify(body));//отправляем данные на сервер   
+    //запрос к серверу через fetch
+    return fetch ('./server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' //свойство и значение
+      },
+      body: JSON.stringify(body),
+      credentials: 'include' //проверка подлинности
     });
   };
 }
