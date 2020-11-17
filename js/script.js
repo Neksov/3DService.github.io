@@ -426,14 +426,18 @@ const sendForm = () =>{
       body[key] = val;
     });
     //две колбек функции
-    postData(body, 
-      () =>{
-          statusMessage.textContent = successMessage;
-      }, 
-      (error) =>{
-          statusMessage.textContent = errorMessage;
-          console.error(error); 
-    });
+
+    const outputData = () =>{
+      statusMessage.textContent = successMessage;
+    };
+    const error = () =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error); 
+    };
+
+    postData(body) 
+      .then(outputData)
+      .catch(error);
 
     formName.value = '';
     formEmail.value = '';
@@ -456,14 +460,17 @@ const sendForm = () =>{
       body[key] = val;
     });
     //две колбек функции
-    postData(body, 
-      () =>{
-          statusMessage.textContent = successMessage;
-      }, 
-      (error) =>{
-          statusMessage.textContent = errorMessage;
-          console.error(error); 
-    });
+    const outputData = () =>{
+      statusMessage.textContent = successMessage;
+    };
+    const error = () =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error); 
+    };
+
+    postData(body) 
+      .then(outputData)
+      .catch(error);
 
     formName2.value = '';
     formEmail2.value = '';
@@ -487,14 +494,17 @@ const sendForm = () =>{
       body[key] = val;
     });
     //две колбек функции
-    postData(body, 
-      () =>{
-          statusMessage.textContent = successMessage;
-      }, 
-      (error) =>{
-          statusMessage.textContent = errorMessage;
-          console.error(error);
-    });
+    const outputData = () =>{
+      statusMessage.textContent = successMessage;
+    };
+    const error = () =>{
+      statusMessage.textContent = errorMessage;
+      console.error(error); 
+    };
+
+    postData(body) 
+      .then(outputData)
+      .catch(error);
 
     formName3.value = '';
     formEmail3.value = '';
@@ -502,43 +512,45 @@ const sendForm = () =>{
     statusMessage.textContent ='';
   });
   
-  const postData = (body, outputData, errorData) =>{
+  const postData = (body) =>{
 
     //запрос к серверу
-    const request = new XMLHttpRequest();// обьект, вызов функции конструктора
+    return new Promise((resolve, reject) =>{
+      const request = new XMLHttpRequest();// обьект, вызов функции конструктора
 
-    request.addEventListener('readystatechange', ()=>{//прослушка события, срабатывает когда меняется статус readyState
-      if(request.readyState !== 4){
-        return;
-      }
-      if(request.status === 200){//если 200 то ок
-        outputData();
-        load.remove(load);
-        let timerId  = setTimeout(() => {
-          popup.style.display = 'none';
-          statusMessage.remove();
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
-      }else{
-        errorData(request.status)
-        load.remove(load);
-        let timerId  = setTimeout(() => {
-          popup.style.display = 'none';
-          statusMessage.remove();
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
-      }
+      request.addEventListener('readystatechange', ()=>{//отлавливаем события, срабатывает когда меняется статус readyState
+        if(request.readyState !== 4){
+          return;
+        }
+        if(request.status === 200){//если 200 то ок
+          resolve(request);
+
+          load.remove(load);//удаляем прилоадер
+          let timerId  = setTimeout(() => {//таймер
+            popup.style.display = 'none';//закрываем модалку
+            statusMessage.remove();//удаляем сообщение под формой
+          }, 3000);
+          while (timerId--) {//удаляем таймер
+            clearTimeout(timerId);
+          }
+        }else{
+          reject(request.status)
+
+          load.remove(load);//удаляем прилоадер
+          let timerId  = setTimeout(() => {//таймер
+            popup.style.display = 'none';//закрываем модалку
+            statusMessage.remove();//удаляем сообщение под формой
+        }, 3000);
+        while (timerId--) {//удаляем таймер
+          clearTimeout(timerId);
+        }
+        }
+      });
+      request.open('POST', './server.php');// отправляем данные на сервер 
+      request.setRequestHeader('Content-Type', 'application/json');//настройка зоголовков (имя зоголовка, значние)
+      request.send(JSON.stringify(body));//отправляем данные на сервер   
     });
-
-    request.open('POST', './server.php');// отправляем данные на сервер 
-    request.setRequestHeader('Content-Type', 'application/json');//настройка зоголовков (имя зоголовка, значние)
-    request.send(JSON.stringify(body));//отправляем данные на сервер 
   };
-
-};
+}
 sendForm();
 }); 
