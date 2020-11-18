@@ -49,4 +49,4 @@ const сalc = (price = 100) =>{
   });
 };
 
-export default calc;
+export default сalc;
