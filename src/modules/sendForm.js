@@ -22,6 +22,8 @@ const sendForm = () =>{
         formEmail3 = document.getElementById('form3-email'),
         formTel3 = document.getElementById('form3-phone'),
         popup = document.querySelector('.popup');
+        let input2;
+
         // formEmail = document.querySelectorAll('.form-email');
 
   let statusMessage = document.createElement('div'),//добавялем элемент на страницу
@@ -39,7 +41,7 @@ const sendForm = () =>{
       if(target.matches('.form-name')){
         target.value = target.value.replace(/[^а-яё\s]/ig, ''); // ограничиваем ввод всего кроме цифр
       }else if(target.matches('.form-phone')){
-        target.value = target.value.replace(/[^\+\d]/g, '').substring(7,12); // ограничиваем ввод всего кроме цифр 
+        target.value = target.value.replace(/[^\+\d]/g, '').substring(0,12); // ограничиваем ввод всего кроме цифр 
       }else if(target.matches('.form-email')){
         target.value = target.value.replace(/\s/g, ''); // ограничиваем ввод всего кроме пробелы
       }
@@ -49,10 +51,14 @@ const sendForm = () =>{
   form1.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form1.appendChild(statusMessage);// добавляем элемент на страницу    
-    form1.appendChild(load);// добавляем элемент на страницу    
+    form1.appendChild(load);// добавляем элемент на страницу
 
+    if(!formTel.value.match(/[0-9+]{7,13}/ig)) {
+      alert('Номер введен не верно');
+      return;
+    }
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
-
+    
     const formData = new FormData(form1);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
     let body = {}; //обект в который помещаем наши данные
 
@@ -61,6 +67,7 @@ const sendForm = () =>{
       body[key] = val;
     });
 
+
     postData(body) 
     .then((response) =>{
       if(response.status !==200){
@@ -68,40 +75,45 @@ const sendForm = () =>{
       }
       statusMessage.textContent = successMessage;
 
-      load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
+      // load.remove(load);//удаляем прилоадер
+      // let timerId  = setTimeout(() => {//таймер
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // }, 3000);
+      // while (timerId--) {//удаляем таймер
+      //   clearTimeout(timerId);
+      // }
+    
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
       console.error(error); 
 
-      load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }  
+      // load.remove(load);//удаляем прилоадер
+      // let timerId  = setTimeout(() => {//таймер
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // }, 3000);
+      // while (timerId--) {//удаляем таймер
+      //   clearTimeout(timerId);
+      // }  
     });
 
     formName.value = '';
     formEmail.value = '';
     formTel.value = '';
     statusMessage.textContent ='';
+
+
+
   });
 
   form2.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form2.appendChild(statusMessage);// добавляем элемент на страницу
     form2.appendChild(load);// добавляем элемент на страницу    
-
+    if(!formTel2.value.match(/[0-9+]{7,13}/ig)) {
+      alert('Номер введен не верно');
+      return;
+    }
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form2);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
@@ -122,7 +134,6 @@ const sendForm = () =>{
 
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
       while (timerId--) {//удаляем таймер
@@ -135,7 +146,6 @@ const sendForm = () =>{
 
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
       while (timerId--) {//удаляем таймер
@@ -155,6 +165,11 @@ const sendForm = () =>{
     form3.appendChild(statusMessage);// добавляем элемент на страницу
     form3.appendChild(load);// добавляем элемент на страницу    
 
+    if(!formTel3.value.match(/[0-9+]{7,13}/ig)) {
+      alert('Номер введен не верно');
+      return;
+    }
+
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form3);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
@@ -171,7 +186,7 @@ const sendForm = () =>{
         throw new Error('status network not 200');
       }
       statusMessage.textContent = successMessage;
-
+      
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
         popup.style.display = 'none';//закрываем модалку
