@@ -39,7 +39,7 @@ const sendForm = () =>{
       if(target.matches('.form-name')){
         target.value = target.value.replace(/[^а-яё\s]/ig, ''); // ограничиваем ввод всего кроме цифр
       }else if(target.matches('.form-phone')){
-        target.value = target.value.replace(/[^\+\d]/g, '').substring(0,12); // ограничиваем ввод всего кроме цифр 
+        target.value = target.value.replace(/[^\+\d]/g, '').substring(7,12); // ограничиваем ввод всего кроме цифр 
       }else if(target.matches('.form-email')){
         target.value = target.value.replace(/\s/g, ''); // ограничиваем ввод всего кроме пробелы
       }
