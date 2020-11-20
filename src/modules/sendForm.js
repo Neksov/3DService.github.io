@@ -192,22 +192,23 @@ const sendForm = () =>{
         popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
+      timerId--
+      // while (timerId--) {//удаляем таймер
+      //   clearTimeout(timerId);
+      // }
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
       console.error(error);   
-
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
         popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
+      timerId--
+      // while (timerId--) {//удаляем таймер
+      //   clearTimeout(timerId);
+      // }
     });
 
     formName3.value = '';
