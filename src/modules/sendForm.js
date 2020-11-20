@@ -46,7 +46,12 @@ const sendForm = () =>{
       }
     });
   });
-
+  let timeOut = () => {
+    setTimeout(() => {
+        statusMessage.remove();
+        popup.style.display = 'none';//закрываем модалку
+    }, 3000);
+  }
   form1.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form1.appendChild(statusMessage);// добавляем элемент на страницу    
@@ -78,21 +83,13 @@ const sendForm = () =>{
       }
       statusMessage.textContent = successMessage;
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
+      timeOut();
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
-      console.error(error); 
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
+      timeOut();
+      console.error(error); 
     });
 
     formName.value = '';
@@ -133,21 +130,13 @@ const sendForm = () =>{
       }
       statusMessage.textContent = successMessage;
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
+      timeOut();
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
-      console.error(error);
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
+      timeOut();
+      console.error(error); 
     });
 
     formName2.value = '';
@@ -189,24 +178,13 @@ const sendForm = () =>{
       }
       statusMessage.textContent = successMessage;
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   popup.style.display = 'none';//закрываем модалку
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
+      timeOut();
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
-      console.error(error);   
       load.remove(load);//удаляем прилоадер
-
-      // let timerId = () =>{//таймер
-      //   popup.style.display = 'none';//закрываем модалку
-      //   statusMessage.remove();//удаляем сообщение под формой
-      // };
-      // setTimeout(timerId, 3000);
-
+      timeOut();
+      console.error(error);   
     });
 
     formName3.value = '';
