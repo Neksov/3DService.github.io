@@ -22,7 +22,6 @@ const sendForm = () =>{
         formEmail3 = document.getElementById('form3-email'),
         formTel3 = document.getElementById('form3-phone'),
         popup = document.querySelector('.popup');
-        let input2;
 
         // formEmail = document.querySelectorAll('.form-email');
 
@@ -55,6 +54,11 @@ const sendForm = () =>{
 
     if(!formTel.value.match(/[0-9+]{7,13}/ig)) {
       alert('Номер введен не верно');
+      statusMessage.remove();//удаляем сообщение под формой
+      return;
+    }else if(formEmail.value === ''){ 
+      alert('Заполните все поля');
+      statusMessage.remove();//удаляем сообщение под формой
       return;
     }
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
@@ -67,53 +71,51 @@ const sendForm = () =>{
       body[key] = val;
     });
 
-
     postData(body) 
     .then((response) =>{
       if(response.status !==200){
         throw new Error('status network not 200');
       }
       statusMessage.textContent = successMessage;
+      load.remove(load);//удаляем прилоадер
 
-      // load.remove(load);//удаляем прилоадер
-      // let timerId  = setTimeout(() => {//таймер
+      // let timerId = () =>{//таймер
       //   statusMessage.remove();//удаляем сообщение под формой
-      // }, 3000);
-      // while (timerId--) {//удаляем таймер
-      //   clearTimeout(timerId);
-      // }
-    
+      // };
+      // setTimeout(timerId, 3000);
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
       console.error(error); 
+      load.remove(load);//удаляем прилоадер
 
-      // load.remove(load);//удаляем прилоадер
-      // let timerId  = setTimeout(() => {//таймер
+      // let timerId = () =>{//таймер
       //   statusMessage.remove();//удаляем сообщение под формой
-      // }, 3000);
-      // while (timerId--) {//удаляем таймер
-      //   clearTimeout(timerId);
-      // }  
+      // };
+      // setTimeout(timerId, 3000);
     });
 
     formName.value = '';
     formEmail.value = '';
     formTel.value = '';
     statusMessage.textContent ='';
-
-
-
   });
 
   form2.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form2.appendChild(statusMessage);// добавляем элемент на страницу
     form2.appendChild(load);// добавляем элемент на страницу    
+
     if(!formTel2.value.match(/[0-9+]{7,13}/ig)) {
+      statusMessage.remove();//удаляем сообщение под формой
       alert('Номер введен не верно');
       return;
+    }else if(formEmail2.value === '' || mess.value === ''){ 
+      statusMessage.remove();//удаляем сообщение под формой
+      alert('Заполните все поля');
+        return;
     }
+
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
 
     const formData = new FormData(form2);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
@@ -124,33 +126,28 @@ const sendForm = () =>{
       body[key] = val;
     });
 
-
     postData(body) 
     .then((response) =>{
       if(response.status !==200){
         throw new Error('status network not 200');
       }
       statusMessage.textContent = successMessage;
-
       load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
+
+      // let timerId = () =>{//таймер
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // };
+      // setTimeout(timerId, 3000);
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
       console.error(error);
-
       load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }   
+
+      // let timerId = () =>{//таймер
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // };
+      // setTimeout(timerId, 3000);
     });
 
     formName2.value = '';
@@ -166,8 +163,13 @@ const sendForm = () =>{
     form3.appendChild(load);// добавляем элемент на страницу    
 
     if(!formTel3.value.match(/[0-9+]{7,13}/ig)) {
+      statusMessage.remove();//удаляем сообщение под формой
       alert('Номер введен не верно');
       return;
+    }else if(formEmail3.value === ''){ 
+      statusMessage.remove();//удаляем сообщение под формой
+      alert('Заполните все поля');
+        return;
     }
 
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
@@ -186,29 +188,25 @@ const sendForm = () =>{
         throw new Error('status network not 200');
       }
       statusMessage.textContent = successMessage;
-      
       load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      timerId--
-      // while (timerId--) {//удаляем таймер
-      //   clearTimeout(timerId);
-      // }
+
+      // let timerId = () =>{//таймер
+      //   popup.style.display = 'none';//закрываем модалку
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // };
+      // setTimeout(timerId, 3000);
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
       console.error(error);   
       load.remove(load);//удаляем прилоадер
-      let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
-        statusMessage.remove();//удаляем сообщение под формой
-      }, 3000);
-      timerId--
-      // while (timerId--) {//удаляем таймер
-      //   clearTimeout(timerId);
-      // }
+
+      // let timerId = () =>{//таймер
+      //   popup.style.display = 'none';//закрываем модалку
+      //   statusMessage.remove();//удаляем сообщение под формой
+      // };
+      // setTimeout(timerId, 3000);
+
     });
 
     formName3.value = '';
