@@ -435,12 +435,11 @@ const sendForm = () =>{
 
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
-      while (timerId--) {//удаляем таймер
-        clearTimeout(timerId);
-      }
+      // while (timerId--) {//удаляем таймер
+      //   clearTimeout(timerId);
+      // }
     })
     .catch((error) =>{
       statusMessage.textContent = errorMessage;
@@ -448,12 +447,12 @@ const sendForm = () =>{
 
       load.remove(load);//удаляем прилоадер
       let timerId  = setTimeout(() => {//таймер
-        popup.style.display = 'none';//закрываем модалку
         statusMessage.remove();//удаляем сообщение под формой
       }, 3000);
       while (timerId--) {//удаляем таймер
         clearTimeout(timerId);
-      }  
+      }
+
     });
 
     formName.value = '';
