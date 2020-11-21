@@ -19,7 +19,7 @@ const animatePopup = () =>{
           elem.addEventListener('click', () =>{
             animate(function(timePassed){
               popupContent.style.top = timePassed / 70 + '%';
-            },2000);
+            },500);
           });
         });
 

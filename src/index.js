@@ -1,5 +1,6 @@
 'use strict';
 
+import 'js-polyfills'; // для отправки форм на сервер в ES
 import "@babel/polyfill";
 import 'nodelist-foreach-polyfill';
 import elementClosest from  'element-closest';

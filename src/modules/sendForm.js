@@ -23,8 +23,6 @@ const sendForm = () =>{
         formTel3 = document.getElementById('form3-phone'),
         popup = document.querySelector('.popup');
 
-        // formEmail = document.querySelectorAll('.form-email');
-
   let statusMessage = document.createElement('div'),//добавялем элемент на страницу
       load = document.createElement('div');//добавялем элемент на страницу
 
@@ -33,19 +31,21 @@ const sendForm = () =>{
 
   input.forEach((elem) =>{
     topForm.classList.add('form-name');//добавили класс к input с классом top-form
-    mess.classList.add('form-name');//добавили класс к input с классом mess
 
     elem.addEventListener('input', (e) =>{  //проверка вводимых дынных-ТОЛЬКО кир и пробелы в инпут ваше имя 
       let target = e.target;
       if(target.matches('.form-name')){
-        target.value = target.value.replace(/[^а-яё\s]/ig, ''); // ограничиваем ввод всего кроме цифр
+        target.value = target.value.replace(/[^а-яё\s]/ig, ''); // ограничиваем ввод всего кроме кирилицы
       }else if(target.matches('.form-phone')){
         target.value = target.value.replace(/[^\+\d]/g, '').substring(0,12); // ограничиваем ввод всего кроме цифр 
       }else if(target.matches('.form-email')){
-        target.value = target.value.replace(/\s/g, ''); // ограничиваем ввод всего кроме пробелы
+        target.value = target.value.replace(/\s/g, ''); // 
+      }else if(target.matches('.mess')){
+        target.value = target.value.replace(/[^\а-яёa-z,.\d\s]/gi, ''); // оставляем кир и лат запятую точку и цифры
       }
     });
   });
+  
   let timeOut = () => {
     setTimeout(() => {
         statusMessage.remove();
@@ -62,10 +62,16 @@ const sendForm = () =>{
       statusMessage.remove();//удаляем сообщение под формой
       return;
     }else if(formEmail.value === ''){ 
+      statusMessage.remove();//удаляем сообщение под формой
       alert('Заполните все поля');
+      return;
+    }
+    else if(!formEmail.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+      alert('Email введен не верно');
       statusMessage.remove();//удаляем сообщение под формой
       return;
     }
+
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
     
     const formData = new FormData(form1);//создаем экземпляр класса и в эту функцию передаем форму с которой получаем данные
@@ -107,10 +113,19 @@ const sendForm = () =>{
       statusMessage.remove();//удаляем сообщение под формой
       alert('Номер введен не верно');
       return;
-    }else if(formEmail2.value === '' || mess.value === ''){ 
+    }else if(mess.value === ''){ 
       statusMessage.remove();//удаляем сообщение под формой
       alert('Заполните все поля');
-        return;
+      return;
+    }else if(formEmail2.value === ''){ 
+      statusMessage.remove();//удаляем сообщение под формой
+      alert('Заполните все поля');
+      return;
+    }
+    else if(!formEmail2.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+      alert('Email введен не верно');
+      statusMessage.remove();//удаляем сообщение под формой
+      return;
     }
 
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
@@ -158,7 +173,12 @@ const sendForm = () =>{
     }else if(formEmail3.value === ''){ 
       statusMessage.remove();//удаляем сообщение под формой
       alert('Заполните все поля');
-        return;
+      return;
+    }
+    else if(!formEmail3.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+      alert('Email введен не верно');
+      statusMessage.remove();//удаляем сообщение под формой
+      return;
     }
 
     load.classList.add('sk-spinner-pulse');//вывод сообщения загрузка
@@ -201,7 +221,7 @@ const sendForm = () =>{
         'Content-Type': 'application/json' //свойство и значение
       },
       body: JSON.stringify(body),
-      credentials: 'include' //проверка подлинности
+      // credentials: 'include' //проверка подлинности
     });
   };
 };

@@ -33,6 +33,7 @@
     "es6-promise": "^4.2.8",
     "fetch-polyfill": "^0.8.2",
     "formdata-polyfill": "^3.0.20",
+    "js-polyfills": "^0.1.43",
     "nodelist-foreach-polyfill": "^1.2.0",
     "smoothscroll-polyfill": "^0.4.4"
   }
