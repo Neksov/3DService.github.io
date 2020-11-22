@@ -41,7 +41,7 @@ const sendForm = () =>{
       }else if(target.matches('.form-email')){
         target.value = target.value.replace(/\s/g, ''); // 
       }else if(target.matches('.mess')){
-        target.value = target.value.replace(/[^\а-яёa-z,.\d\s]/gi, ''); // оставляем кир и лат запятую точку и цифры
+        target.value = target.value.replace(/[^\а-яёa-z,.:\d\s]/gi, ''); // оставляем кир и лат запятую точку и цифры
       }
     });
   });
@@ -66,7 +66,7 @@ const sendForm = () =>{
       alert('Заполните все поля');
       return;
     }
-    else if(!formEmail.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+    else if(!formEmail.value.match(/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/gi)){
       alert('Email введен не верно');
       statusMessage.remove();//удаляем сообщение под формой
       return;
@@ -122,7 +122,7 @@ const sendForm = () =>{
       alert('Заполните все поля');
       return;
     }
-    else if(!formEmail2.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+    else if(!formEmail2.value.match(/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/gi)){
       alert('Email введен не верно');
       statusMessage.remove();//удаляем сообщение под формой
       return;
@@ -174,8 +174,7 @@ const sendForm = () =>{
       statusMessage.remove();//удаляем сообщение под формой
       alert('Заполните все поля');
       return;
-    }
-    else if(!formEmail3.value.match(/^[\w\d_.+-]+@[\w\d-]+.[\w\s]+$/ig, '')){
+    }else if(!formEmail3.value.match(/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/gi)){
       alert('Email введен не верно');
       statusMessage.remove();//удаляем сообщение под формой
       return;
@@ -221,9 +220,8 @@ const sendForm = () =>{
         'Content-Type': 'application/json' //свойство и значение
       },
       body: JSON.stringify(body),
-      // credentials: 'include' //проверка подлинности
+      credentials: 'include' //проверка подлинности
     });
   };
 };
-
 export default sendForm;
