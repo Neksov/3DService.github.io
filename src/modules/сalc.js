@@ -41,6 +41,7 @@ const сalc = (price = 100) =>{
     totalValue.textContent = total; //вывод итоговая цена
   };
   
+  
   calcBlock.addEventListener('change', (e) =>{
     let target = e.target;
     if(target === calcType || target === calcSquare || target === calcCount || target === calcDay ){

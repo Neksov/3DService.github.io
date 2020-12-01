@@ -52,6 +52,7 @@ const sendForm = () =>{
         popup.style.display = 'none';//закрываем модалку
     }, 3000);
   }
+  
   form1.addEventListener('submit', (event) =>{
     event.preventDefault();//отменяем стандарное поведение браузера
     form1.appendChild(statusMessage);// добавляем элемент на страницу    
