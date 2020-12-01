@@ -26,7 +26,7 @@ import sendForm from './modules/sendForm';
 
 
 //Tаймер 
-countTimer('30 December 2020');
+countTimer('30 December 2022');
 //меню, откртие/закрытие 
 toggleMenu();
 //popup
